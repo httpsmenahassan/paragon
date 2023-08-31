@@ -5,7 +5,7 @@
       ✓ render with loading state (3 ms) - Cindy done
       ✓ renders the auto-populated value if it exists (5 ms) - Mena done
       ✓ renders component with options (5 ms) - Cindy done
-      ✓ renders with error msg (8 ms) - Mena
+      ✓ renders with error msg (8 ms) - Mena done
     controlled behavior
       ✓ selects option (8 ms) - Pair
       ✓ when a function is passed to onClick, it is called (6 ms)
