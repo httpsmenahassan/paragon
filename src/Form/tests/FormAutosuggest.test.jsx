@@ -94,17 +94,17 @@ describe('render behavior', () => {
   //       expect(optionsList.length).toEqual(3);
   //     });
   
-  //     it('renders with error msg', () => {
-  //       container.find('input').simulate('click');
-  //       act(() => {
-  //         const event = new Event('click', { bubbles: true });
-  //         document.dispatchEvent(event);
-  //       });
-  //       container.update();
-  //       const formControlFeedback = container.find('FormControlFeedback');
+      it('renders with error msg', () => {
+        container.find('input').simulate('click');
+        act(() => {
+          const event = new Event('click', { bubbles: true });
+          document.dispatchEvent(event);
+        });
+        container.update();
+        const formControlFeedback = container.find('FormControlFeedback');
   
-  //       expect(formControlFeedback.text()).toEqual('Example error message');
-  //     });
+        expect(formControlFeedback.text()).toEqual('Example error message');
+      });
     });
 
 
