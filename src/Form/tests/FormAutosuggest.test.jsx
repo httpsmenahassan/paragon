@@ -112,31 +112,6 @@ describe('render behavior', () => {
         expect(formControlFeedback).toBeInTheDocument();
       });
     });
-
-    //
-    //
-    // OLD ERROR MESSAGE TEST BELOW: -----------
-    //
-    //
-
-    // it('renders with error msg', () => {
-      //       container.find('input').simulate('click');
-      //       act(() => {
-      //         const event = new Event('click', { bubbles: true });
-      //         document.dispatchEvent(event);
-      //       });
-      //       container.update();
-      //       const formControlFeedback = container.find('FormControlFeedback');
-      
-      //       expect(formControlFeedback.text()).toEqual('Example error message');
-      //     });
-      //   });
-
-
-
-
-
-
 //
 //
 // OLD CODE BELOW --------------------- :
