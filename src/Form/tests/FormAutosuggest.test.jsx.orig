@@ -2,9 +2,9 @@
     render behavior
       ✓ renders component without error (3 ms) - Paired done 
       ✓ render without loading state (2 ms) - Paired done
-      ✓ render with loading state (3 ms) - Cindy done
-      ✓ renders the auto-populated value if it exists (5 ms) - Mena done
-      ✓ renders component with options (5 ms) - Cindy done
+      ✓ render with loading state (3 ms) - Cindy 
+      ✓ renders the auto-populated value if it exists (5 ms) - Mena
+      ✓ renders component with options (5 ms) - Cindy
       ✓ renders with error msg (8 ms) - Mena
     controlled behavior
       ✓ selects option (8 ms) - Pair
@@ -19,8 +19,12 @@
 
 
 import React from 'react';
+<<<<<<< HEAD
 import { render, screen, fireEvent } from '@testing-library/react';
+=======
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'
+>>>>>>> d53d13b25 (autopopulated test passed! I think this is all set?)
 import { IntlProvider } from 'react-intl';
 import FormAutosuggest from '../FormAutosuggest';
 import FormAutosuggestOption from '../FormAutosuggestOption';
@@ -66,6 +70,8 @@ function FormAutosuggestTestComponent(){
   //   );
 
 describe('render behavior', () => {
+     
+
       it('renders component without error', () => {
         render(<FormAutosuggestWrapper />);
       });
@@ -82,57 +88,30 @@ describe('render behavior', () => {
   
       it('renders the auto-populated value if it exists', () => {
         render(<FormAutosuggestWrapper value="Test Value" />);
+  
         expect(screen.getByDisplayValue('Test Value')).toBeInTheDocument();
       });
-
+  
       it('renders component with options', () => {
         const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
-        const input = getByTestId("autosuggest_textbox_input")
+        const input = getByTestId("pgn__form-autosuggest__dropdown-box")
         fireEvent.click(input)
-        const list = container.querySelectorAll('li');
-        expect(list.length).toBe(3);
+        const list = container.querySelectorAll('button');
+        expect(list.length).toBe(3); //TO DO: Change this to look for <li>
       });
   
+  //     it('renders with error msg', () => {
+  //       container.find('input').simulate('click');
+  //       act(() => {
+  //         const event = new Event('click', { bubbles: true });
+  //         document.dispatchEvent(event);
+  //       });
+  //       container.update();
+  //       const formControlFeedback = container.find('FormControlFeedback');
   
-      it('renders with error msg', () => {
-        const { getByText, getByTestId } = render(<FormAutosuggestTestComponent />);
-        const input = getByTestId("autosuggest_textbox_input")
-
-        // if you click into the input and hit escape, you should see the error message
-        fireEvent.click(input)
-        fireEvent.keyDown(input, {
-          key: "Escape",
-          code: "Escape",
-          keyCode: 27,
-          charCode: 27
-        });
-
-        const formControlFeedback = getByText('Example error message');
-  
-        expect(formControlFeedback).toBeInTheDocument();
-      });
+  //       expect(formControlFeedback.text()).toEqual('Example error message');
+  //     });
     });
-
-    //
-    //
-    // OLD ERROR MESSAGE TEST BELOW: -----------
-    //
-    //
-
-    // it('renders with error msg', () => {
-      //       container.find('input').simulate('click');
-      //       act(() => {
-      //         const event = new Event('click', { bubbles: true });
-      //         document.dispatchEvent(event);
-      //       });
-      //       container.update();
-      //       const formControlFeedback = container.find('FormControlFeedback');
-      
-      //       expect(formControlFeedback.text()).toEqual('Example error message');
-      //     });
-      //   });
-
-
 
 
 
