@@ -19,8 +19,7 @@
 
 
 import React from 'react';
-import { render, screen, fireEvent, getByRole } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import FormAutosuggest from '../FormAutosuggest';
 import FormAutosuggestOption from '../FormAutosuggestOption';
@@ -30,6 +29,24 @@ function FormAutosuggestWrapper(props) {
     <IntlProvider locale="en" messages={{}}>
       <FormAutosuggest {...props} />
     </IntlProvider>
+  );
+}
+
+function FormAutosuggestTestComponent(){
+  const onSelected = jest.fn();
+  const onClick = jest.fn();
+  return (
+    <FormAutosuggestWrapper
+      name="FormAutosuggest"
+      floatingLabel="floatingLabel text"
+      helpMessage="Example help message"
+      errorMessageText="Example error message"
+      onSelected={onSelected}
+    >
+      <FormAutosuggestOption>Option 1</FormAutosuggestOption>
+      <FormAutosuggestOption onClick={onClick}>Option 2</FormAutosuggestOption>
+      <FormAutosuggestOption>Learn from more than 160 member universities</FormAutosuggestOption>
+    </FormAutosuggestWrapper>
   );
 }
 
@@ -48,38 +65,21 @@ function FormAutosuggestWrapper(props) {
   //   );
 
 describe('render behavior', () => {
-  const onSelected = jest.fn();
-  const onClick = jest.fn();
-      const { container } = render(
-        <FormAutosuggestWrapper
-        name="FormAutosuggest"
-        floatingLabel="floatingLabel text"
-        helpMessage="Example help message"
-        errorMessageText="Example error message"
-        onSelected={onSelected}
-      >
-        <FormAutosuggestOption>Option 1</FormAutosuggestOption>
-        <FormAutosuggestOption onClick={onClick}>Option 2</FormAutosuggestOption>
-        <FormAutosuggestOption>Learn from more than 160 member universities</FormAutosuggestOption>
-        </FormAutosuggestWrapper>,
-      );
+     
 
       it('renders component without error', () => {
         render(<FormAutosuggestWrapper />);
       });
   
       it('renders without loading state', () => {
-        // expect(container.exists('.pgn__form-autosuggest__dropdown-loading')).toBe(false);
-        // expect(container.props().isLoading).toBeUndefined();
+        const { container } = render( <FormAutosuggestTestComponent />);
         expect(container.querySelector('.pgn__form-autosuggest__dropdown-loading')).toBeNull();
       });
   
-  //     it('render with loading state', () => {
-  //       const wrapper = mount(<FormAutosuggestWrapper isLoading />);
-  
-  //       expect(wrapper.exists('.pgn__form-autosuggest__dropdown-loading')).toBe(true);
-  //       expect(wrapper.props().isLoading).toBe(true);
-  //     });
+      it('render with loading state', () => {
+        const { container } = render(<FormAutosuggestWrapper isLoading />);
+        expect(container.querySelector('.pgn__form-autosuggest__dropdown-loading')).toBeTruthy();
+      });
   
   //     it('renders the auto-populated value if it exists', () => {
   //       const wrapper = mount(<FormAutosuggestWrapper value="Test Value" />);
@@ -88,12 +88,14 @@ describe('render behavior', () => {
   //       expect(wrapper.props().value).toEqual('Test Value');
   //     });
   
-  //     it('renders component with options', () => {
-  //       container.find('input').simulate('click');
-  //       const optionsList = container.find('.pgn__form-autosuggest__dropdown').find('button');
+      it('renders component with options', () => {
+        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+        const input = getByTestId("pgn__form-autosuggest__dropdown-box")
+        fireEvent.click(input)
+        const list = container.querySelectorAll('button');
+        expect(list.length).toBe(3); //TO DO: Change this to look for <li>
+      });
   
-  //       expect(optionsList.length).toEqual(3);
-  //     });
   
       it('renders with error msg', () => {
         const input = screen.getByTestId('autosuggest-textbox')
