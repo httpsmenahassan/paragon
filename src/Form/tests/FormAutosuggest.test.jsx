@@ -19,7 +19,8 @@
 
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, getByRole } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
 import FormAutosuggest from '../FormAutosuggest';
 import FormAutosuggestOption from '../FormAutosuggestOption';
@@ -95,17 +96,41 @@ describe('render behavior', () => {
   //     });
   
       it('renders with error msg', () => {
-        container.find('input').simulate('click');
-        act(() => {
-          const event = new Event('click', { bubbles: true });
-          document.dispatchEvent(event);
-        });
+        const input = screen.getByTestId('autosuggest-textbox')
+        fireEvent.click(input)
+        // fireEvent(
+        //   getByRole(container, 'input'),
+        //   new MouseEvent('click', {
+        //     bubbles: true,
+        //   }),
+        // )
         container.update();
-        const formControlFeedback = container.find('FormControlFeedback');
+        const formControlFeedback = getByText('FormControlFeedback');
   
-        expect(formControlFeedback.text()).toEqual('Example error message');
+        expect(formControlFeedback).toBeInTheDocument();
       });
     });
+
+    //
+    //
+    // OLD ERROR MESSAGE TEST BELOW: -----------
+    //
+    //
+
+    // it('renders with error msg', () => {
+      //       container.find('input').simulate('click');
+      //       act(() => {
+      //         const event = new Event('click', { bubbles: true });
+      //         document.dispatchEvent(event);
+      //       });
+      //       container.update();
+      //       const formControlFeedback = container.find('FormControlFeedback');
+      
+      //       expect(formControlFeedback.text()).toEqual('Example error message');
+      //     });
+      //   });
+
+
 
 
 

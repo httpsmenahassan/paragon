@@ -224,6 +224,7 @@ function FormAutosuggest({
           onChange={handleOnChange}
           onClick={handleClick}
           trailingElement={iconToggle}
+          // data-testid="autosuggest-textbox"
           {...props}
         />
 
