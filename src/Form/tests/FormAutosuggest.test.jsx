@@ -184,11 +184,15 @@ describe('controlled behavior', () => {
         // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
 
         const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+        const dropdownBtn = container.querySelector('button.pgn__form-autosuggest__icon-button');
 
-        const dropdownBtn = container.querySelector('button.pgn__form-autosuggest__icon-button')
+        fireEvent.click(dropdownBtn);
 
         const list = container.querySelectorAll('li');
         expect(list.length).toBe(3);
+
+        fireEvent.click(dropdownBtn);
+        expect(list.length).toBe(0);
       });
 
   it('filters dropdown based on typed field value with multiple matches', () => {
