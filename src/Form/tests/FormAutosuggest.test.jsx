@@ -171,18 +171,18 @@ describe('controlled behavior', () => {
     expect(list.length).toBe(1);
   });
 
-  //     it('toggles options list', () => {
-  //      this is toggling when the dropdown button is clicked
-  //       const dropdownContainer = '.pgn__form-autosuggest__dropdown';
+      it('toggles options list', () => {
+       this is toggling when the dropdown button is clicked
+        const dropdownContainer = '.pgn__form-autosuggest__dropdown';
 
-  //       expect(container.find(dropdownContainer).find('button').length).toEqual(3);
+        expect(container.find(dropdownContainer).find('button').length).toEqual(3);
 
-  //       container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-  //       expect(container.find(dropdownContainer).find('button').length).toEqual(0);
+        container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+        expect(container.find(dropdownContainer).find('button').length).toEqual(0);
 
-  //       container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-  //       expect(container.find(dropdownContainer).find('button').length).toEqual(3);
-  //     });
+        container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+        expect(container.find(dropdownContainer).find('button').length).toEqual(3);
+      });
 
   it('filters dropdown based on typed field value with multiple matches', () => {
     const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
