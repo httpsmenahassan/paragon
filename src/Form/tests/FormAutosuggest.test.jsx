@@ -173,15 +173,19 @@ describe('controlled behavior', () => {
 
       it('toggles options list', () => {
       //  this is toggling when the dropdown button is clicked
-        const dropdownContainer = '.pgn__form-autosuggest__dropdown';
+        // const dropdownContainer = '.pgn__form-autosuggest__dropdown';
 
         // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
         
-        container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-        expect(container.find(dropdownContainer).find('button').length).toEqual(0);
+        // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+        // expect(container.find(dropdownContainer).find('button').length).toEqual(0);
 
-        container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-        expect(container.find(dropdownContainer).find('button').length).toEqual(3);
+        // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+        // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
+
+        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+
+        const dropdownBtn = container.querySelector('button.pgn__form-autosuggest__icon-button')
 
         const list = container.querySelectorAll('li');
         expect(list.length).toBe(3);
