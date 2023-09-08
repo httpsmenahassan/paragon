@@ -196,38 +196,16 @@ describe('controlled behavior', () => {
   });
 
   it('closes options list on click outside', () => {
-  //       const fireEvent = createDocumentListenersMock();
-  //       const dropdownContainer = '.pgn__form-autosuggest__dropdown';
-
-    //       container.find('input').simulate('click');
-    //       expect(container.find(dropdownContainer).find('button').length).toEqual(2);
-
-    //       act(() => { fireEvent.click(document.body); });
-    //       container.update();
-
-    //       expect(container.find(dropdownContainer).find('button').length).toEqual(0);
-
     const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
     const input = getByTestId('autosuggest_textbox_input');
-    // const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown');
 
-    // expect(dropdownContainer).toBeInTheDocument();
     fireEvent.click(input);
     const list = container.querySelectorAll('li');
-
     expect(list.length).toBe(3);
 
     fireEvent.click(document.body);
-
-    return screen.findByTestId(input, { timeout: 1000 })
-      .then(() => {
-        // expect(dropdownContainer).not.toBeInTheDocument();
-
-        // Check if the list items are no longer present
-        // const updatedList = container.querySelectorAll('li');
-        expect(list.length).toBe(0);
-      })
-      .catch(() => {});
+    const updatedList = container.querySelectorAll('li');
+    expect(updatedList.length).toBe(0);
   });
   //   });
 
