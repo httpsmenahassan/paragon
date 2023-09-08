@@ -19,7 +19,6 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { IntlProvider } from 'react-intl';
 import FormAutosuggest from '../FormAutosuggest';
@@ -212,6 +211,7 @@ describe('controlled behavior', () => {
         const input = getByTestId('autosuggest_textbox_input');
         const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown')
 
+        expect(dropdownContainer).toBeInTheDocument();
         fireEvent.click(input)
         const list = container.querySelectorAll('li');
 
@@ -219,15 +219,15 @@ describe('controlled behavior', () => {
 
         fireEvent.click(document.body)
 
-        return screen.findByTestId('autosuggest_dropdown', { timeout: 1000 })
+        return screen.findByTestId(input, { timeout: 1000 })
         .then(() => {
+          expect(dropdownContainer).not.toBeInTheDocument();
+
           // Check if the list items are no longer present
           const updatedList = container.querySelectorAll('li');
           expect(updatedList.length).toBe(0);
         })
         .catch(() => {});
-        // expect(list.length).toBe(0)
-
       });
   //   });
 
