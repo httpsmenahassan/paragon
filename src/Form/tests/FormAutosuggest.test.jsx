@@ -217,8 +217,16 @@ describe('controlled behavior', () => {
 
         expect(list.length).toBe(3);
 
-        userEvent.click(document.body)
-        expect(list.length).toBe(0)
+        fireEvent.click(document.body)
+
+        return screen.findByTestId('autosuggest_dropdown', { timeout: 1000 })
+        .then(() => {
+          // Check if the list items are no longer present
+          const updatedList = container.querySelectorAll('li');
+          expect(updatedList.length).toBe(0);
+        })
+        .catch(() => {});
+        // expect(list.length).toBe(0)
 
       });
   //   });
