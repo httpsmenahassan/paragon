@@ -195,7 +195,7 @@ describe('controlled behavior', () => {
     expect(list.length).toBe(2);
   });
 
-  //     it('closes options list on click outside', () => {
+      it('closes options list on click outside', () => {
   //       const fireEvent = createDocumentListenersMock();
   //       const dropdownContainer = '.pgn__form-autosuggest__dropdown';
 
@@ -206,7 +206,20 @@ describe('controlled behavior', () => {
   //       container.update();
 
   //       expect(container.find(dropdownContainer).find('button').length).toEqual(0);
-  //     });
+
+        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+        const input = getByTestId('autosuggest_textbox_input');
+        const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown')
+
+        fireEvent.click(input)
+        const list = container.querySelectorAll('li');
+
+        expect(list.length).toBe(3);
+
+        fireEvent.click(document.body)
+        expect(list.length).toBe(0)
+
+      });
   //   });
 
   // it('check focus on input after esc', () => {
