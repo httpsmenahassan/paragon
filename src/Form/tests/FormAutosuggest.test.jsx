@@ -209,7 +209,7 @@ describe('controlled behavior', () => {
 
     const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
     const input = getByTestId('autosuggest_textbox_input');
-    const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown');
+    // const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown');
 
     // expect(dropdownContainer).toBeInTheDocument();
     fireEvent.click(input);
