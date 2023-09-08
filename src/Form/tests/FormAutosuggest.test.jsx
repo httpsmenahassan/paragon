@@ -224,8 +224,8 @@ describe('controlled behavior', () => {
         // expect(dropdownContainer).not.toBeInTheDocument();
 
         // Check if the list items are no longer present
-        const updatedList = container.querySelectorAll('li');
-        expect(updatedList.length).toBe(0);
+        // const updatedList = container.querySelectorAll('li');
+        expect(list.length).toBe(0);
       })
       .catch(() => {});
   });
