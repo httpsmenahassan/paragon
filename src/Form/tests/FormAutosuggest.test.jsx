@@ -19,6 +19,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { IntlProvider } from 'react-intl';
 import FormAutosuggest from '../FormAutosuggest';
@@ -207,7 +208,7 @@ describe('controlled behavior', () => {
 
   //       expect(container.find(dropdownContainer).find('button').length).toEqual(0);
 
-        const { userEvent, getByTestId, container } = render(<FormAutosuggestTestComponent />);
+        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
         const input = getByTestId('autosuggest_textbox_input');
         const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown')
 
@@ -216,7 +217,7 @@ describe('controlled behavior', () => {
 
         expect(list.length).toBe(3);
 
-        userEvent.click(body)
+        userEvent.click(document.body)
         expect(list.length).toBe(0)
 
       });
