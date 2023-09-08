@@ -216,7 +216,7 @@ describe('controlled behavior', () => {
 
         expect(list.length).toBe(3);
 
-        fireEvent.click(document.body)
+        userEvent.click(document.body)
         expect(list.length).toBe(0)
 
       });
