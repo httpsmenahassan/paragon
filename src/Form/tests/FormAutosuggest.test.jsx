@@ -207,7 +207,7 @@ describe('controlled behavior', () => {
 
   //       expect(container.find(dropdownContainer).find('button').length).toEqual(0);
 
-        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+        const { userEvent, getByTestId, container } = render(<FormAutosuggestTestComponent />);
         const input = getByTestId('autosuggest_textbox_input');
         const dropdownContainer = container.querySelector('.pgn__form-autosuggest__dropdown')
 
@@ -216,7 +216,7 @@ describe('controlled behavior', () => {
 
         expect(list.length).toBe(3);
 
-        userEvent.click(document.body)
+        userEvent.click(body)
         expect(list.length).toBe(0)
 
       });
