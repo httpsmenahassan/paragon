@@ -166,42 +166,42 @@ describe('controlled behavior', () => {
 
     fireEvent.click(input);
     fireEvent.change(input, { target: { value: 'Option 1' } });
-    
+
     const list = container.querySelectorAll('li');
     expect(list.length).toBe(1);
   });
 
-      it('toggles options list', () => {
-      //  this is toggling when the dropdown button is clicked
-        // const dropdownContainer = '.pgn__form-autosuggest__dropdown';
+  it('toggles options list', () => {
+    //  this is toggling when the dropdown button is clicked
+    // const dropdownContainer = '.pgn__form-autosuggest__dropdown';
 
-        // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
-        
-        // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-        // expect(container.find(dropdownContainer).find('button').length).toEqual(0);
+    // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
 
-        // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
-        // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
+    // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+    // expect(container.find(dropdownContainer).find('button').length).toEqual(0);
 
-        const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
-        const dropdownBtn = container.querySelector('button.pgn__form-autosuggest__icon-button');
+    // container.find('button.pgn__form-autosuggest__icon-button').simulate('click');
+    // expect(container.find(dropdownContainer).find('button').length).toEqual(3);
 
-        fireEvent.click(dropdownBtn);
+    const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
+    const dropdownBtn = container.querySelector('button.pgn__form-autosuggest__icon-button');
 
-        const list = container.querySelectorAll('li');
-        expect(list.length).toBe(3);
+    fireEvent.click(dropdownBtn);
 
-        fireEvent.click(dropdownBtn);
-        expect(list.length).toBe(0);
-      });
+    const list = container.querySelectorAll('li');
+    expect(list.length).toBe(3);
+
+    fireEvent.click(dropdownBtn);
+    expect(list.length).toBe(0);
+  });
 
   it('filters dropdown based on typed field value with multiple matches', () => {
     const { getByTestId, container } = render(<FormAutosuggestTestComponent />);
     const input = getByTestId('autosuggest_textbox_input');
-    
+
     fireEvent.click(input);
     fireEvent.change(input, { target: { value: '1' } });
-    
+
     const list = container.querySelectorAll('li');
     expect(list.length).toBe(2);
   });
