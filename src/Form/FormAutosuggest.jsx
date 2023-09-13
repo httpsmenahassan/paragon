@@ -228,6 +228,9 @@ function FormAutosuggest({
 
   return (
     <div className="pgn__form-autosuggest__wrapper" ref={parentRef}>
+      <div aria-live="assertive" className="sr-only">
+        {`${state.dropDownItems.length} options found`}
+      </div>
       <FormGroup isInvalid={!!state.errorMessage}>
         <FormControl
           aria-expanded={(state.dropDownItems.length > 0).toString()}
@@ -237,6 +240,7 @@ function FormAutosuggest({
           autoComplete="off"
           value={state.displayValue}
           aria-invalid={state.errorMessage}
+          aria-activedescendant={activeMenuItemId}
           onChange={handleOnChange}
           onClick={handleClick}
           trailingElement={iconToggle}
