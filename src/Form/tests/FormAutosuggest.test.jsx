@@ -136,6 +136,17 @@ describe('controlled behavior', () => {
     expect(onClick).toHaveBeenCalledTimes(0);
   });
 
+  it('should set the correct activedescendant', () => {
+    const { getByTestId, getAllByTestId } = render(<FormAutosuggestTestComponent/>);
+    const input = getByTestId('autosuggest_textbox_input');
+
+    userEvent.click(input);
+    const expectedOptionId = getAllByTestId('autosuggest_optionitem')[0].id;
+    userEvent.keyboard('{arrowdown}');
+
+    expect(input.getAttribute('aria-activedescendant')).toEqual(expectedOptionId);
+  });
+
   it('filters dropdown based on typed field value with one match', () => {
     const { getByTestId, queryAllByTestId } = render(<FormAutosuggestTestComponent />);
     const input = getByTestId('autosuggest_textbox_input');
