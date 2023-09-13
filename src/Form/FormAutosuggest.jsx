@@ -39,6 +39,11 @@ function FormAutosuggest({
     errorMessage: '',
     dropDownItems: [],
   });
+  const [activeMenuItemId, setActiveMenuItemId] = useState(null);
+
+  const handleMenuItemFocus = (menuItemId) => {
+    setActiveMenuItemId(menuItemId);
+  };
 
   const handleItemClick = (e, onClick) => {
     const clickedValue = e.currentTarget.getAttribute('data-value');
@@ -64,12 +69,15 @@ function FormAutosuggest({
     let childrenOpt = React.Children.map(children, (child) => {
       // eslint-disable-next-line no-shadow
       const { children, onClick, ...rest } = child.props;
+      const menuItemId = uuidv4();
 
       return React.cloneElement(child, {
         ...rest,
         children,
         'data-value': children,
         onClick: (e) => handleItemClick(e, onClick),
+        id: menuItemId,
+        onFocus: () => handleMenuItemFocus(menuItemId),
       });
     });
 
