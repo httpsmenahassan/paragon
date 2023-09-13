@@ -283,8 +283,6 @@ FormAutosuggest.defaultProps = {
   className: null,
   floatingLabel: null,
   onChange: null,
-  // is this necessary?: and do I need to add this to other pieces of the code where props are?
-  // onFocus: null,
   onSelected: null,
   helpMessage: '',
   placeholder: '',
