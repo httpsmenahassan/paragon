@@ -228,7 +228,7 @@ function FormAutosuggest({
 
   return (
     <div className="pgn__form-autosuggest__wrapper" ref={parentRef}>
-      <div aria-live="assertive" className="sr-only">
+      <div aria-live="assertive" className="sr-only" data-testid="autosuggest-screen-reader-options-count">
         {`${state.dropDownItems.length} options found`}
       </div>
       <FormGroup isInvalid={!!state.errorMessage}>
