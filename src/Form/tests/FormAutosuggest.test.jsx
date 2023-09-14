@@ -85,6 +85,23 @@ describe('render behavior', () => {
 
     expect(formControlFeedback).toBeInTheDocument();
   });
+
+  it('renders component with options that all have IDs', () => {
+    const { getByTestId, getAllByTestId } = render(<FormAutosuggestTestComponent />);
+    const input = getByTestId('autosuggest_textbox_input');
+
+    userEvent.click(input);
+    const optionItemIds = getAllByTestId('autosuggest_optionitem').map(item => item.id);
+
+    expect(optionItemIds).not.toContain(null);
+    expect(optionItemIds).not.toContain(undefined);
+  });
+
+  it('confirms that the value of the aria-live attribute on the wrapper component is assertive', () => {
+    const { getByTestId } = render(<FormAutosuggestWrapper />);
+
+    expect(getByTestId('autosuggest-screen-reader-options-count').getAttribute('aria-live')).toEqual('assertive');
+  });
 });
 
 describe('controlled behavior', () => {
@@ -137,7 +154,7 @@ describe('controlled behavior', () => {
   });
 
   it('should set the correct activedescendant', () => {
-    const { getByTestId, getAllByTestId } = render(<FormAutosuggestTestComponent/>);
+    const { getByTestId, getAllByTestId } = render(<FormAutosuggestTestComponent />);
     const input = getByTestId('autosuggest_textbox_input');
 
     userEvent.click(input);
