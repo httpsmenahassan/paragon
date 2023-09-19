@@ -28,7 +28,6 @@ FormAutosuggestOption.defaultProps = {
   className: null,
   children: null,
   onClick: null,
-  id: null,
 };
 
 FormAutosuggestOption.propTypes = {
@@ -38,8 +37,6 @@ FormAutosuggestOption.propTypes = {
   children: PropTypes.string,
   /** A click handler for the `FormAutosuggestOption` */
   onClick: PropTypes.func,
-  /** An id for the `FormAutosuggestOption` */
-  id: PropTypes.any,
 };
 
 export default FormAutosuggestOption;
