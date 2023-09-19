@@ -102,6 +102,16 @@ describe('render behavior', () => {
 
     expect(getByTestId('autosuggest-screen-reader-options-count').getAttribute('aria-live')).toEqual('assertive');
   });
+
+  it('displays correct amount of options found to screen readers', () => {
+    const { getByText, getByTestId } = render(<FormAutosuggestTestComponent />);
+    const input = getByTestId('autosuggest_textbox_input');
+
+    expect(getByText('0 options found')).toBeInTheDocument();
+    userEvent.click(input);
+
+    expect(getByText('3 options found')).toBeInTheDocument();
+  });
 });
 
 describe('controlled behavior', () => {
@@ -214,5 +224,20 @@ describe('controlled behavior', () => {
     userEvent.click(document.body);
     const updatedList = queryAllByTestId('autosuggest_optionitem');
     expect(updatedList.length).toBe(0);
+  });
+
+  it('updates screen reader option count based on typed field value with multiple matches', () => {
+    const { getByText, getByTestId } = render(<FormAutosuggestTestComponent />);
+    const input = getByTestId('autosuggest_textbox_input');
+
+    expect(getByText('0 options found')).toBeInTheDocument();
+    userEvent.click(input);
+
+    expect(getByText('3 options found')).toBeInTheDocument();
+
+    userEvent.click(input);
+    userEvent.type(input, '1');
+
+    expect(getByText('2 options found')).toBeInTheDocument();
   });
 });
