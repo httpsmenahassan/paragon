@@ -45,24 +45,29 @@ function FormAutosuggest({
   console.log("VALUE:", value)
 
   const handleItemClick = (e, onClick) => {
-    const clickedValue = e.currentTarget.getAttribute('data-value');
-
+    const clickedDataValue = e.currentTarget.getAttribute('data-value');
+    const clickedDisplayValue = e.currentTarget.innerText
+   
     if (onSelected && clickedValue !== value) {
-      onSelected(clickedValue);
+      onSelected({dataValue: clickedValue, displayValue: clickedDisplayValue, });
+      // call on selected and passes the object as an argument
+      // doc site example, selected will now be a data object
+      //then passes that in and passes that in as the value of the autosuggest component
+      // component believes its jsut eh display value, so whereever its value it should be displayvalue
     }
 
     setState(prevState => ({
       ...prevState,
       dropDownItems: [],
-      displayValue: "clickedValue",
+      displayValue: clickedDisplayValue,
     }));
 
     setIsMenuClosed(true);
 
     if (onClick) {
       onClick(e);
-    }
-  };
+    } 
+  }; 
 
   function getItems(strToFind = '') {
     let childrenOpt = React.Children.map(children, (child) => {
