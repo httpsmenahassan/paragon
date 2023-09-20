@@ -27,8 +27,10 @@ Form auto-suggest enables users to manually select or type to find matching opti
             aria-label="form autosuggest"
             helpMessage="Select language"
             errorMessageText="Error, no selected value"
+            errorNoMatchingText="Error, no matching value"
             value={selected}
             onSelected={(value) => setSelected(value)}
+            allowFreeFormInput={true}
         >
             <Form.AutosuggestOption>JavaScript</Form.AutosuggestOption>
             <Form.AutosuggestOption>Python</Form.AutosuggestOption>

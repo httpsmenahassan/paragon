@@ -2,6 +2,7 @@ import React, {
   useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { useIntl } from 'react-intl';
 import { KeyboardArrowUp, KeyboardArrowDown } from '../../icons';
 import Icon from '../Icon';
@@ -13,6 +14,7 @@ import Spinner from '../Spinner';
 import useArrowKeyNavigation from '../hooks/useArrowKeyNavigation';
 import messages from './messages';
 
+//this is the function that is being called in the mdx file
 function FormAutosuggest({
   children,
   arrowKeyNavigationSelector,
@@ -20,10 +22,12 @@ function FormAutosuggest({
   screenReaderText,
   value,
   isLoading,
-  errorMessageText,
+  errorMessageText, //create more, more specific error no selected value
+  errorNoMatchingText, // error no matching value
   onChange,
   onSelected,
   helpMessage,
+  allowFreeFormInput,
   ...props
 }) {
   const intl = useIntl();
@@ -38,6 +42,7 @@ function FormAutosuggest({
     errorMessage: '',
     dropDownItems: [],
   });
+  console.log("VALUE:", value)
 
   const handleItemClick = (e, onClick) => {
     const clickedValue = e.currentTarget.getAttribute('data-value');
@@ -49,7 +54,7 @@ function FormAutosuggest({
     setState(prevState => ({
       ...prevState,
       dropDownItems: [],
-      displayValue: clickedValue,
+      displayValue: "clickedValue",
     }));
 
     setIsMenuClosed(true);
@@ -62,12 +67,12 @@ function FormAutosuggest({
   function getItems(strToFind = '') {
     let childrenOpt = React.Children.map(children, (child) => {
       // eslint-disable-next-line no-shadow
-      const { children, onClick, ...rest } = child.props;
+      const { children, onClick, value, ...rest } = child.props;
 
       return React.cloneElement(child, {
         ...rest,
         children,
-        'data-value': children,
+        'data-value': value ?? children,
         onClick: (e) => handleItemClick(e, onClick),
       });
     });
@@ -117,13 +122,45 @@ function FormAutosuggest({
   const handleDocumentClick = (e) => {
     if (parentRef.current && !parentRef.current.contains(e.target) && isActive) {
       setIsActive(false);
+      
+      let errorMessage = ""
+
+      if (!state.displayValue){
+        console.log("Nothing typed:", errorMessageText)
+        
+        // !state.displayValue errorMessage = errorMessageText ? errorMessageText : ''
+      }
+      else if(!allowFreeFormInput){
+        console.log("Freeform not allowed:", errorNoMatchingText)
+        const dropDownItems = getItems(state.displayValue)
+        let inputMatchesDropDown = false
+        React.Children.forEach(children, (child) => {
+          console.log("item", child.props.children)
+          console.log(child.props)
+          if (state.displayValue === child.props.children){
+            onSelected(state.displayValue) // freeform input is not allowed, HAS to match option values
+            //when we get real option values then pass in as onSelected argument
+            //child.props gives me access to the option props, aka where we are setting the option value
+            //when we pass it into onSelected, it now becomes the display value as well
+
+            inputMatchesDropDown = true
+          }
+        })
+        if (!inputMatchesDropDown){
+          onSelected("") //setting components parent value back to default
+          errorMessage = errorNoMatchingText
+          console.log("Freeform not allowed and doesn't match:", state.displayValue, dropDownItems, errorMessage)
+        }
+      }else{
+        onSelected(state.displayValue) // freeform IS allowed, give state.displayValue
+      }
 
       setState(prevState => ({
         ...prevState,
         dropDownItems: [],
-        errorMessage: !state.displayValue ? errorMessageText : '',
+        errorMessage: errorMessage,
       }));
-
+      
       setIsMenuClosed(true);
     }
   };
@@ -193,9 +230,9 @@ function FormAutosuggest({
 
   const handleOnChange = (e) => {
     const findStr = e.target.value;
-
+    
     if (onChange) { onChange(findStr); }
-
+    
     if (findStr.length) {
       const filteredItems = getItems(findStr);
       setState(prevState => ({
@@ -274,7 +311,8 @@ FormAutosuggest.defaultProps = {
   helpMessage: '',
   placeholder: '',
   value: null,
-  errorMessageText: null,
+  errorMessageText: "Error, no selected value",
+  errorNoMatchingText: "Error, no matching value",
   readOnly: false,
   children: null,
   name: 'form-autosuggest',
