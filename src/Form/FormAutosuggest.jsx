@@ -21,6 +21,7 @@ function FormAutosuggest({
   ignoredArrowKeysNames,
   screenReaderText,
   value,
+  freeformValue,
   isLoading,
   errorMessageText, //create more, more specific error no selected value
   errorNoMatchingText, // error no matching value
@@ -38,7 +39,7 @@ function FormAutosuggest({
   const [isMenuClosed, setIsMenuClosed] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [state, setState] = useState({
-    displayValue: value || '',
+    displayValue: freeformValue || '',
     errorMessage: '',
     dropDownItems: [],
   });
@@ -48,8 +49,8 @@ function FormAutosuggest({
     const clickedDataValue = e.currentTarget.getAttribute('data-value');
     const clickedDisplayValue = e.currentTarget.innerText
    
-    if (onSelected && clickedValue !== value) {
-      onSelected({dataValue: clickedValue, displayValue: clickedDisplayValue, });
+    if (onSelected && clickedDataValue !== value) {
+      onSelected({dataValue: clickedDataValue, displayValue: clickedDisplayValue, });
       // call on selected and passes the object as an argument
       // doc site example, selected will now be a data object
       //then passes that in and passes that in as the value of the autosuggest component
@@ -197,7 +198,7 @@ function FormAutosuggest({
     if (value || value === '') {
       setState(prevState => ({
         ...prevState,
-        displayValue: value,
+        displayValue: freeformValue,
       }));
     }
   }, [value]);
