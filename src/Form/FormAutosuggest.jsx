@@ -194,28 +194,34 @@ function FormAutosuggest({
     };
   });
 
-  useEffect(() => {
-    if (value || value === '') {
-      setState(prevState => ({
-        ...prevState,
-        displayValue: freeformValue,
-      }));
-    }
-  }, [value]);
+  // just have a setup function -- no return, don't need cleanup code here
+  // doesn't seem like these useEffects lines are useful at all. not clear on what it's being used for
+  // useEffect(() => {
+  //   if (value || value === '') {
+  //     setState(prevState => ({
+  //       ...prevState,
+  //       displayValue: freeformValue,
+  //     }));
+  //   }
+  // }, [value]);
 
-  const setDisplayValue = (itemValue) => {
-    const optValue = [];
+  const setDisplayValue = (typedValue) => {
+    const optValues = [];
 
     children.forEach(opt => {
-      optValue.push(opt.props.children);
+      // opt.props.children is our displayValue
+      optValues.push({displayValue: opt.props.children, dataValue: opt.props.value});
+      // optValues.push({opt.props.children});
     });
 
-    const normalized = itemValue.toLowerCase();
-    const opt = optValue.find((o) => o.toLowerCase() === normalized);
+
+    const normalized = typedValue.toLowerCase();
+    // const opt = optValue.find((o) => o.displayValue.toLowerCase() === normalized);
+    const opt = optValues.find((o) => o.displayValue.toLowerCase() === normalized);
 
     setState(prevState => ({
       ...prevState,
-      displayValue: opt || itemValue,
+      displayValue: opt ? opt.displayValue : typedValue,
     }));
   };
 
